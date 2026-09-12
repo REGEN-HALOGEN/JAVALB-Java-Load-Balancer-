@@ -1,0 +1,19 @@
+# ---- Java / Gradle ----
+backend/.gradle/
+backend/build/
+backend/.idea/
+
+# ---- Node / Next.js ----
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.vercel
+
+# ---- env & logs ----
+.env
+.env.local
+.env.*.local
+*.log
+
+# ---- OS ----
+.DS_Store

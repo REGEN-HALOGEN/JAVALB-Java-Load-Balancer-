@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: javalb-backend
+    runtime: docker
+    dockerfilePath: backend/Dockerfile
+    healthCheckPath: /health
+    plan: free # Render free spins down after ~15min idle; keep the dashboard open or use a ping-cron
+    envVars:
+      - key: PORT
+        value: 8080
+      # - key: CORS_ORIGINS
+      #   value: https://your-dashboard.vercel.app
+      # - key: SUPABASE_DB_URL
+      #   sync: false

@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100;
+}
+
+/* thin dark scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.live-dot {
+  animation: pulse-glow 1.6s ease-in-out infinite;
+}
+
+@keyframes req-pulse {
+  from {
+    opacity: 0.95;
+  }
+  to {
+    opacity: 0.15;
+  }
+}
+.req-pulse {
+  animation: req-pulse 0.9s ease-out forwards;
+}
