@@ -93,13 +93,14 @@ public final class App {
 
         // ---- config: strategy, sticky sessions, health interval, backend mutations ----
         app.post("/api/config", ctx -> {
-            handleConfig(engine, ctx.bodyAsClass(Map.class));
+            @SuppressWarnings("unchecked") Map<String, Object> body = ctx.bodyAsClass(Map.class);
+            handleConfig(engine, body);
             ctx.json(fullSnapshot(engine, generator));
         });
 
         // ---- load generator ----
         app.post("/api/load", ctx -> {
-            Map<String, Object> body = ctx.bodyAsClass(Map.class);
+            @SuppressWarnings("unchecked") Map<String, Object> body = ctx.bodyAsClass(Map.class);
             boolean running = body.get("running") == null
                     ? Boolean.TRUE.equals(generator.status().get("running"))
                     : Boolean.parseBoolean(String.valueOf(body.get("running")));
@@ -114,7 +115,7 @@ public final class App {
 
         // ---- one manual request through the balancer ----
         app.post("/api/proxy", ctx -> {
-            Map<String, Object> body = ctx.bodyAsClass(Map.class);
+            @SuppressWarnings("unchecked") Map<String, Object> body = ctx.bodyAsClass(Map.class);
             String client = asString(body.get("clientId"), "manual-client");
             String path = asString(body.get("path"), "/req");
             ctx.json(engine.route(RequestContext.of(client, path)));
@@ -122,7 +123,7 @@ public final class App {
 
         // ---- experiments (recorded to Supabase) ----
         app.post("/api/experiment", ctx -> {
-            Map<String, Object> body = ctx.bodyAsClass(Map.class);
+            @SuppressWarnings("unchecked") Map<String, Object> body = ctx.bodyAsClass(Map.class);
             String name = asString(body.get("name"), "experiment");
             if (activeExperiment[0] == null) {
                 engine.resetStats();
