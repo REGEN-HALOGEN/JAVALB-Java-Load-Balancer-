@@ -16,7 +16,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useLiveStore } from "@/lib/store";
+import { useLiveNodes, useLiveSnapshot } from "@/lib/store";
 import { nodeColor } from "@/lib/algorithms";
 import { fmtMs, fmtNum, fmtPct, fmtRate } from "@/lib/format";
 
@@ -48,7 +48,8 @@ function Empty() {
 }
 
 function RatesChart() {
-  const totals = useLiveStore((s) => s.snapshot?.totals);
+  const snapshot = useLiveSnapshot();
+  const totals = snapshot?.totals;
   const series = totals?.rateSeries ?? [];
   const data = series.map((rate, i) => ({ t: `${-(series.length - 1 - i)}s`, rate }));
 
@@ -79,7 +80,8 @@ function RatesChart() {
 }
 
 function LatencyChart() {
-  const totals = useLiveStore((s) => s.snapshot?.totals);
+  const snapshot = useLiveSnapshot();
+  const totals = snapshot?.totals;
   const series = totals?.p95Series ?? [];
   const data = series.map((p95, i) => ({
     t: `${-(series.length - 1 - i)}s`,
@@ -111,7 +113,7 @@ function LatencyChart() {
 }
 
 function PerNodeChart() {
-  const nodes = useLiveStore((s) => s.snapshot?.nodes ?? []);
+  const nodes = useLiveNodes();
   const data = nodes.map((n) => ({ name: n.id, requests: n.totalRequests, state: n.state, inFlight: n.inFlight }));
 
   return (
@@ -138,9 +140,9 @@ function PerNodeChart() {
 }
 
 export default function MetricsCharts() {
-  const snapshot = useLiveStore((s) => s.snapshot);
+  const snapshot = useLiveSnapshot();
   const totals = snapshot?.totals;
-  const nodes = snapshot?.nodes ?? [];
+  const nodes = useLiveNodes();
   const stats = [
     { label: "Total requests", value: fmtNum(totals?.totalRequests) },
     { label: "Current rate", value: fmtRate(totals?.reqRate) },

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useLiveStore } from "@/lib/store";
+import { useLiveNodes, useLiveRequests, useLiveSnapshot } from "@/lib/store";
 import { CLIENT_COLORS, nodeColor } from "@/lib/algorithms";
 import type { NodeInfo, RequestEvent } from "@/lib/types";
 
@@ -31,12 +31,12 @@ function hashStr(s: string): number {
 }
 
 export default function TopologyDiagram() {
-  const snapshot = useLiveStore((s) => s.snapshot);
-  const requests = useLiveStore((s) => s.requests);
+  const snapshot = useLiveSnapshot();
+  const requests = useLiveRequests();
   const [pulses, setPulses] = useState<Pulse[]>([]);
   const counter = useRef(0);
 
-  const nodes: NodeInfo[] = snapshot?.nodes ?? [];
+  const nodes = useLiveNodes();
   const clientsShown = Math.min(snapshot?.load.numClients ?? 6, 10);
 
   const clientY = (i: number) => 28 + i * 24;

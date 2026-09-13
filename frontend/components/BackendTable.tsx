@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { HeartPulse, Pause, Play, Plus, Skull, Trash2 } from "lucide-react";
 import { api } from "@/lib/api";
-import { useLiveStore } from "@/lib/store";
+import { useLiveNodes } from "@/lib/store";
 import { nodeColor } from "@/lib/algorithms";
 import { fmtNum } from "@/lib/format";
 import type { NodeInfo } from "@/lib/types";
@@ -22,7 +22,7 @@ const stateLabel: Record<NodeInfo["state"], string> = {
 };
 
 export default function BackendTable() {
-  const nodes = useLiveStore((s) => s.snapshot?.nodes ?? []);
+  const nodes = useLiveNodes();
   const [drafts, setDrafts] = useState<Record<string, RowDraft>>({});
   const dragTimers = useRef<Record<string, ReturnType<typeof setTimeout> | null>>({});
   const [showAdd, setShowAdd] = useState(false);

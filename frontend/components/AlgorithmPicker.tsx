@@ -4,10 +4,11 @@ import { useState } from "react";
 import { Check, GitBranch } from "lucide-react";
 import { ALGORITHMS } from "@/lib/algorithms";
 import { api } from "@/lib/api";
-import { useLiveStore } from "@/lib/store";
+import { useLiveSnapshot } from "@/lib/store";
 
 export default function AlgorithmPicker() {
-  const active = useLiveStore((s) => s.snapshot?.algorithm);
+  const snapshot = useLiveSnapshot();
+  const active = snapshot?.algorithm;
   const [busy, setBusy] = useState(false);
 
   const select = async (name: string) => {

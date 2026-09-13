@@ -1,11 +1,12 @@
 "use client";
 
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ListOrdered } from "lucide-react";
-import { useLiveStore } from "@/lib/store";
+import { useLiveRequests } from "@/lib/store";
 import { fmtMs, fmtTime } from "@/lib/format";
 
 export default function RequestLog() {
-  const requests = useLiveStore((s) => s.requests);
+  const requests = useLiveRequests();
   const list = [...requests].reverse().slice(0, 150);
 
   return (

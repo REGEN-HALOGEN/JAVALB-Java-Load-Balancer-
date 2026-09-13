@@ -2,11 +2,11 @@
 
 import { Activity, Server } from "lucide-react";
 import { LB_URL } from "@/lib/api";
-import { useLiveStore } from "@/lib/store";
+import { useLiveConnected, useLiveSnapshot } from "@/lib/store";
 
 export default function StatusHeader() {
-  const connected = useLiveStore((s) => s.connected);
-  const snapshot = useLiveStore((s) => s.snapshot);
+  const connected = useLiveConnected();
+  const snapshot = useLiveSnapshot();
 
   return (
     <header className="flex flex-wrap items-center gap-4 px-6 py-4 border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-20">

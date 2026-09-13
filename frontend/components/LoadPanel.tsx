@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Crosshair, Play, RotateCcw, Square } from "lucide-react";
 import { api } from "@/lib/api";
-import { useLiveStore } from "@/lib/store";
+import { useLiveSnapshot } from "@/lib/store";
 
 const PATTERNS = [
   { value: "steady", label: "Steady" },
@@ -13,8 +13,9 @@ const PATTERNS = [
 ];
 
 export default function LoadPanel() {
-  const running = useLiveStore((s) => s.snapshot?.load.running ?? false);
-  const snapLoad = useLiveStore((s) => s.snapshot?.load);
+  const snapshot = useLiveSnapshot();
+  const running = snapshot?.load.running ?? false;
+  const snapLoad = snapshot?.load;
 
   const [rate, setRate] = useState(snapLoad?.ratePerSec ?? 60);
   const [concurrency, setConcurrency] = useState(snapLoad?.concurrency ?? 24);
